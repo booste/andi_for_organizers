@@ -67,7 +67,7 @@ print('If it is not the first time you use this, load the files instead of creat
 Y1 = np.array(Y1[0])
 Y2 = np.array(Y2[0])
 Y3 = np.array(Y3[0])
-print(Y1)
+#print(Y1)
 #label for changing point and alpha. entries from andi are (dimension, tc,class1,a1,class2,a2) 
 #I want (a1,a2,sin(2pi*tc/T),cos(2pi*tc/T))
 #NB it seems like the data shape chages when you produce or load the data!!! when you create it it also has the entry telling you the dimension
@@ -75,14 +75,14 @@ print(Y1)
 corr=0
 
 ss=np.shape(Y1)
-print('shape is ',ss)
+#print('shape is ',ss)
 ccl1=np.zeros((ss[0],4))
 ccl1[:,0]=Y1[:,3-corr]
 ccl1[:,1]=Y1[:,5-corr]
 ccl1[:,2]=np.sin((2*np.pi*Y1[:,1-corr])/200)
 ccl1[:,3]=np.cos((2*np.pi*Y1[:,1-corr])/200)
 
-print(ccl1)
+#print(ccl1)
 
 ccl2=np.zeros((ss[0],4))
 ccl2[:,0]=Y2[:,3-corr]
