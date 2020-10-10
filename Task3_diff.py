@@ -57,9 +57,9 @@ Z, Z, Z, Z, X3, Y3 = AD.andi_dataset(N = N, tasks = 3, dimensions = dimension,
                                              min_T = i, max_T = i+1, load_dataset=False, path_datasets=str(i)+'master3')
 print('If it is not the first time you use this, load the files instead of creating them!',
       'If you load them change the parameter corr from 0 to 1')
-#X1[0] = np.diff(X1[0],axis=1)
-#X2[0] = np.diff(X2[0],axis=1)
-#X3[0] = np.diff(X3[0],axis=1)
+X1[0] = np.diff(X1[0],axis=1)
+X2[0] = np.diff(X2[0],axis=1)
+X3[0] = np.diff(X3[0],axis=1)
 
 
 
@@ -109,6 +109,8 @@ ccl3[:,3]=np.cos((2*np.pi*Y3[:,1-corr])/200)
 
 test_tim_step=np.arange(i-1)
 show_time_coll=np.tile(test_tim_step,(len(X1[0]),1))
+#print(show_time_coll.shape)
+#print(X1[0].shape)
 
 mc = keras.callbacks.ModelCheckpoint(
     filepath='checkpoint_1D_recdout_' + str(i) + '.h5',
@@ -123,11 +125,11 @@ for n in range(1):
         
         for repeat in range(20):
             #Normalize trajectory, makes it into array of dimension 2, using bot position and time stamp
-            data_show,label_show,traj_show,times_show=data_split(np.diff(np.asarray(X1[0]),axis=1),
+            data_show,label_show,traj_show,times_show=data_split(X1[0],
                                                      show_time_coll,
                                                          labels=ccl1,
                                                          start_row=0,num_row=len(X1[0]),
-                                                         traj_len=i,n_in=0,n_samples=1,
+                                                         traj_len=i-1,n_in=0,n_samples=1,
                                                          p_p=1,hmin=0,hmax=2,limith=False,normalization=True)
 
 
@@ -140,11 +142,11 @@ for n in range(1):
                                     callbacks=[mc],
                                     )
             print('########## TRAINING PROGRESS: Batch_size_' + str(batch_size) + '_' +  str(5*repeat + 3) +'percent')
-            data_show,label_show,traj_show,times_show=data_split(np.diff(np.asarray(X2[0]),axis=1),
+            data_show,label_show,traj_show,times_show=data_split(X2[0],
                                                      show_time_coll,
                                                          labels=ccl2,
                                                          start_row=0,num_row=len(X2[0]),
-                                                         traj_len=i,n_in=0,n_samples=1,
+                                                         traj_len=i-1,n_in=0,n_samples=1,
                                                          p_p=1,hmin=0,hmax=2,limith=False,normalization=True)
 
             history_norm_long = model_switch.fit(data_show, 
@@ -156,11 +158,11 @@ for n in range(1):
                                     callbacks=[mc],
                                     )
             print('########## TRAINING PROGRESS: Batch_size_' + str(batch_size) + '_' + str(5*repeat + 7) +'percent')
-            data_show,label_show,traj_show,times_show=data_split(np.diff(np.asarray(X3[0]),axis=1),
+            data_show,label_show,traj_show,times_show=data_split(X3[0],
                                                      show_time_coll,
                                                          labels=ccl3,
                                                          start_row=0,num_row=len(X3[0]),
-                                                         traj_len=i,n_in=0,n_samples=1,
+                                                         traj_len=i-1,n_in=0,n_samples=1,
                                                          p_p=1,hmin=0,hmax=2,limith=False,normalization=True)
 
             history_norm_long = model_switch.fit(data_show, 
