@@ -107,7 +107,7 @@ ccl3[:,3]=np.cos((2*np.pi*Y3[:,1-corr])/200)
 #data_norm3 = np.array(( data_tot - np.mean(data_tot, axis=1).reshape(len(data_tot),1) ) / np.std(data_tot,axis=1).reshape(len(data_tot),1))
 
 
-test_tim_step=np.arange(i)
+test_tim_step=np.arange(i-1)
 show_time_coll=np.tile(test_tim_step,(len(X1[0]),1))
 
 mc = keras.callbacks.ModelCheckpoint(
