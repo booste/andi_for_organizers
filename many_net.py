@@ -161,7 +161,7 @@ def many_net_only_diff(nets,traj_set,min_tr=0,center=25,max_tr=1000,comb=True):
         if comb==True:
             
             if ((rl-k*sp>sp/2)and(k<n_nets-1)):
-                rl_b=int(jj/di[k+1])*di[k+1] 
+                rl_b=int((jj-1)/di[k+1])*di[k+1] 
                 rs_traj_b = np.asarray(traj[:rl_b]).reshape(1,int(rl_b/di[k+1]),di[k+1])
                 #print("combine! length=",rl,
                 #      "chosen net=",k,"distance between chosen net and traj",rl-k*sp)
