@@ -5,13 +5,18 @@
 #it also assumes all nets take the same dimension, this can be changes
 #works for 1d data
 import numpy as np
-def many_net(nets,traj_set,di,min_tr=0,center=25,max_tr=1000,comb=True):
+def many_net(nets,traj_set,min_tr=0,center=25,max_tr=1000,comb=True):
     """takes as input list of networks, data set and the vector di 
     of the dimension of the data the different networks work on """
     n_nets=len(nets) #number of nets we can use
     sp=max_tr/n_nets  #length of range that on which each net will be used
     #print(sp)
     predictions_comb=[]
+    di=[]
+    for n in nets:
+        di.append(n.layers[0].input_shape[-1])
+    di=np.asarray(di)
+    #print(di)
     for traj in traj_set:
         #normalizing trajectory
         traj=(traj-np.mean(traj))/np.std(traj)
@@ -45,12 +50,16 @@ def many_net(nets,traj_set,di,min_tr=0,center=25,max_tr=1000,comb=True):
 #it assumes equal spacing of the nets and that they are centered at 1/4 of the range
 #it also assumes all nets take the same dimension, this can be changes
 #works for 1d data
-def many_net_diffv(nets,traj_set,di,diffv,min_tr=0,center=25,max_tr=1000,comb=True):
+def many_net_diffv(nets,traj_set,diffv,min_tr=0,center=25,max_tr=1000,comb=True):
     """takes as input list of networks, data set and the vector di 
     of the dimension of the data the different networks work on """
     n_nets=len(nets) #number of nets we can use
     sp=max_tr/n_nets  #length of range that on which each net will be used
     #print(sp)
+    di=[]
+    for n in nets:
+        di.append(n.layers[0].input_shape[-1])
+    di=np.asarray(di)
     predictions_comb=[]
     for traj in traj_set:
         jj=len(traj)
@@ -116,12 +125,16 @@ def many_net_diffv(nets,traj_set,di,diffv,min_tr=0,center=25,max_tr=1000,comb=Tr
     return np.asarray(predictions_comb).flatten()
      
 
-def many_net_only_diff(nets,traj_set,di,min_tr=0,center=25,max_tr=1000,comb=True):
+def many_net_only_diff(nets,traj_set,min_tr=0,center=25,max_tr=1000,comb=True):
     """takes as input list of networks, data set and the vector di 
     of the dimension of the data the different networks work on """
     n_nets=len(nets) #number of nets we can use
     sp=max_tr/n_nets  #length of range that on which each net will be used
     #print(sp)
+    di=[]
+    for n in nets:
+        di.append(n.layers[0].input_shape[-1])
+    di=np.asarray(di)
     predictions_comb=[]
     for traj in traj_set:
         jj=len(traj)
