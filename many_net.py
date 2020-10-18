@@ -125,7 +125,7 @@ def many_net_diffv(nets,traj_set,diffv,min_tr=0,center=25,max_tr=1000,comb=True)
     return np.asarray(predictions_comb).flatten()
      
 
-def many_net_only_diff(nets,traj_set,min_tr=0,center=25,max_tr=1000,comb=True):
+def many_net_only_diff(nets,traj_set,skip=[],min_tr=0,center=25,max_tr=1000,comb=True):
     """takes as input list of networks, data set and the vector di 
     of the dimension of the data the different networks work on """
     n_nets=len(nets) #number of nets we can use
@@ -158,13 +158,13 @@ def many_net_only_diff(nets,traj_set,min_tr=0,center=25,max_tr=1000,comb=True):
         #print(len(traj),"chosen net",k)
         pr_b=nets[k].predict(rs_traj).flatten()
         
-        if comb==True:
+        if ((comb==True) and np.isin(k,skip,invert=True) ):
             
             if ((rl-k*sp>sp/2)and(k<n_nets-1)):
                 rl_b=int((jj-1)/di[k+1])*di[k+1] 
                 rs_traj_b = np.asarray(traj[:rl_b]).reshape(1,int(rl_b/di[k+1]),di[k+1])
-                #print("combine! length=",rl,
-                #      "chosen net=",k,"distance between chosen net and traj",rl-k*sp)
+#                print("combine! length=",rl,
+#                      "chosen net=",k,"distance between chosen net and traj",rl-k*sp)
                 pr_2b=nets[k+1].predict(rs_traj_b).flatten()
                 pr_b=(pr_b+pr_2b)/2
 
@@ -172,4 +172,5 @@ def many_net_only_diff(nets,traj_set,min_tr=0,center=25,max_tr=1000,comb=True):
         
     return np.asarray(predictions_comb).flatten()
      
+
                 
