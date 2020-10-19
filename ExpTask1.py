@@ -1,4 +1,4 @@
-import andi 
+#import andi 
 import numpy as np
 import tensorflow.keras as keras
 from tensorflow.keras.models import Sequential
@@ -79,7 +79,7 @@ for n in range(1):
     
     for batch_size in [32, 128, 512, 2048,]:
         
-        for repeat in range(20):
+        for repeat in range(5):
             traj_show = data_norm1
             label_show = Y1
             history_norm_long = model_norm_long.fit(traj_show.reshape(len(traj_show),int(i/4),4), 
@@ -111,7 +111,7 @@ for n in range(1):
 #                                    shuffle=True,
 #                                    )
             print('########## TRAINING PROGRESS: Batch_size_' + str(batch_size) + '_' + str(5*repeat + 10) +'percent')
-            model_norm_long.save('checkpoint.h5')
+            model_norm_long.save('exp_checkpoint.h5')
            
         
 model_norm_long.save('ExpModel_1D_recdout_' + str(i) + '.h5')
