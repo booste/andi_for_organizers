@@ -33,7 +33,7 @@ model_norm_long.add(LSTM(50,
                     ))
 
 #Last layer, fully connected
-model_norm_long.add(Dense(1))
+model_norm_long.add(Dense(4))
 model_norm_long.compile(optimizer='adam',
                 loss='mse', 
                 metrics=['mae'])
