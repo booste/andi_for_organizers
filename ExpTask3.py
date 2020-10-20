@@ -99,7 +99,7 @@ for n in range(1):
                                     )
             print('########## TRAINING PROGRESS: Batch_size_' + str(batch_size) + '_' +  str(5*repeat + 3) +'percent')
                   
-            model_switch.save('checkpoint.h5')
+            model_switch.save('exp_checkpoint.h5')
            
         
 model_switch.save('Exp_Task3_Model_1D_recdout_' + str(i) + '.h5')
