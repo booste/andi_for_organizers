@@ -70,9 +70,14 @@ def many_net_diffv(nets,traj_set,diffv,min_tr=0,center=25,max_tr=1000,comb=True)
             traj2=np.diff(traj)
         
         #normalizing trajectory
-            traj2=(traj2-np.mean(traj2))/np.std(traj2)
+            sd2 = np.std(traj2)
+            if sd2>0:
+                
+                traj2=(traj2-np.mean(traj2))/sd2
             #print('traj len=',jj,'diff')
-        
+            else:
+                traj2=(traj2-np.mean(traj2))
+                
             
             
         else:
@@ -81,7 +86,12 @@ def many_net_diffv(nets,traj_set,diffv,min_tr=0,center=25,max_tr=1000,comb=True)
        
         
         #normalizing trajectory
-            traj2=(traj-np.mean(traj))/np.std(traj)
+            sd=np.std(traj)
+            if sd>0:
+                
+                traj2=(traj-np.mean(traj))/sd
+            else:
+                traj2=(traj-np.mean(traj))
         
          #print(rl)
         rs_traj = np.asarray(traj2[:rl]).reshape(1,int(rl/di[k]),di[k]) # reshaped trajectory to fir network requirement
@@ -101,7 +111,12 @@ def many_net_diffv(nets,traj_set,diffv,min_tr=0,center=25,max_tr=1000,comb=True)
                     traj2=np.diff(traj)
         
         #normalizing trajectory
-                    traj2=(traj2-np.mean(traj2))/np.std(traj2)
+                    sd2=np.std(traj2)
+                    if sd2>0:
+                        traj2=(traj2-np.mean(traj2))/sd2
+                        
+                    else:
+                       traj2=(traj2-np.mean(traj2)) 
             #print('traj len=',jj,'diff')
         
             
@@ -112,8 +127,13 @@ def many_net_diffv(nets,traj_set,diffv,min_tr=0,center=25,max_tr=1000,comb=True)
        
         
         #normalizing trajectory
-                    traj2=(traj-np.mean(traj))/np.std(traj)
-                
+                    sd=np.std(traj)
+                    if sd>0:
+                        
+                        traj2=(traj-np.mean(traj))/sd
+                    else:
+                        traj2=(traj-np.mean(traj))
+                        
                 rs_traj_b = np.asarray(traj2[:rl_b]).reshape(1,int(rl_b/di[kp]),di[kp])
                 #print("combine! length=",rl,
                 #      "chosen net=",k,"distance between chosen net and traj",rl-k*sp)
@@ -145,7 +165,11 @@ def many_net_only_diff(nets,traj_set,skip=[],min_tr=0,center=25,max_tr=1000,comb
         traj=np.diff(traj)
         
         #normalizing trajectory
-        traj=(traj-np.mean(traj))/np.std(traj)
+        sd=np.std(traj)
+        if sd>0:
+            traj=(traj-np.mean(traj))/sd
+        else:
+            traj=(traj-np.mean(traj))
             #print('traj len=',jj,'diff')
         
             
@@ -195,7 +219,11 @@ def many_net_only_diff_cont(nets,traj_set,skip=[],min_tr=0,center=25,max_tr=1000
         traj=np.diff(traj)
         
         #normalizing trajectory
-        traj=(traj-np.mean(traj))/np.std(traj)
+        sd=np.std(traj)
+        if sd>0:
+            traj=(traj-np.mean(traj))/sd
+        else:
+            traj=(traj-np.mean(traj))
             #print('traj len=',jj,'diff')
         
             
@@ -253,7 +281,12 @@ def many_net_only_diff_cont_varc(nets,traj_set,centers,skip=[],min_tr=0,max_tr=1
         traj=np.diff(traj)
         
         #normalizing trajectory
-        traj=(traj-np.mean(traj))/np.std(traj)
+        
+        sd=np.std(traj)
+        if sd>0:
+            traj=(traj-np.mean(traj))/sd
+        else:
+            traj=(traj-np.mean(traj))
             #print('traj len=',jj,'diff')
         
             
