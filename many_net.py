@@ -70,9 +70,14 @@ def many_net_diffv(nets,traj_set,diffv,min_tr=0,center=25,max_tr=1000,comb=True)
             traj2=np.diff(traj)
         
         #normalizing trajectory
-            traj2=(traj2-np.mean(traj2))/np.std(traj2)
+            sd2 = np.std(traj2)
+            if sd2>0:
+                
+                traj2=(traj2-np.mean(traj2))/sd2
             #print('traj len=',jj,'diff')
-        
+            else:
+                traj2=(traj2-np.mean(traj2))
+                
             
             
         else:
@@ -81,7 +86,12 @@ def many_net_diffv(nets,traj_set,diffv,min_tr=0,center=25,max_tr=1000,comb=True)
        
         
         #normalizing trajectory
-            traj2=(traj-np.mean(traj))/np.std(traj)
+            sd=np.std(traj)
+            if sd>0:
+                
+                traj2=(traj-np.mean(traj))/sd
+            else:
+                traj2=(traj-np.mean(traj))
         
          #print(rl)
         rs_traj = np.asarray(traj2[:rl]).reshape(1,int(rl/di[k]),di[k]) # reshaped trajectory to fir network requirement
@@ -101,7 +111,12 @@ def many_net_diffv(nets,traj_set,diffv,min_tr=0,center=25,max_tr=1000,comb=True)
                     traj2=np.diff(traj)
         
         #normalizing trajectory
-                    traj2=(traj2-np.mean(traj2))/np.std(traj2)
+                    sd2=np.std(traj2)
+                    if sd2>0:
+                        traj2=(traj2-np.mean(traj2))/sd2
+                        
+                    else:
+                       traj2=(traj2-np.mean(traj2)) 
             #print('traj len=',jj,'diff')
         
             
@@ -112,8 +127,13 @@ def many_net_diffv(nets,traj_set,diffv,min_tr=0,center=25,max_tr=1000,comb=True)
        
         
         #normalizing trajectory
-                    traj2=(traj-np.mean(traj))/np.std(traj)
-                
+                    sd=np.std(traj)
+                    if sd>0:
+                        
+                        traj2=(traj-np.mean(traj))/sd
+                    else:
+                        traj2=(traj-np.mean(traj))
+                        
                 rs_traj_b = np.asarray(traj2[:rl_b]).reshape(1,int(rl_b/di[kp]),di[kp])
                 #print("combine! length=",rl,
                 #      "chosen net=",k,"distance between chosen net and traj",rl-k*sp)
@@ -125,7 +145,7 @@ def many_net_diffv(nets,traj_set,diffv,min_tr=0,center=25,max_tr=1000,comb=True)
     return np.asarray(predictions_comb).flatten()
      
 
-def many_net_only_diff(nets,traj_set,min_tr=0,center=25,max_tr=1000,comb=True):
+def many_net_only_diff(nets,traj_set,skip=[],min_tr=0,center=25,max_tr=1000,comb=True):
     """takes as input list of networks, data set and the vector di 
     of the dimension of the data the different networks work on """
     n_nets=len(nets) #number of nets we can use
@@ -145,7 +165,11 @@ def many_net_only_diff(nets,traj_set,min_tr=0,center=25,max_tr=1000,comb=True):
         traj=np.diff(traj)
         
         #normalizing trajectory
-        traj=(traj-np.mean(traj))/np.std(traj)
+        sd=np.std(traj)
+        if sd>0:
+            traj=(traj-np.mean(traj))/sd
+        else:
+            traj=(traj-np.mean(traj))
             #print('traj len=',jj,'diff')
         
             
@@ -158,13 +182,13 @@ def many_net_only_diff(nets,traj_set,min_tr=0,center=25,max_tr=1000,comb=True):
         #print(len(traj),"chosen net",k)
         pr_b=nets[k].predict(rs_traj).flatten()
         
-        if comb==True:
+        if ((comb==True) and np.isin(k,skip,invert=True) ):
             
             if ((rl-k*sp>sp/2)and(k<n_nets-1)):
-                rl_b=int(jj/di[k+1])*di[k+1] 
+                rl_b=int((jj-1)/di[k+1])*di[k+1] 
                 rs_traj_b = np.asarray(traj[:rl_b]).reshape(1,int(rl_b/di[k+1]),di[k+1])
-                #print("combine! length=",rl,
-                #      "chosen net=",k,"distance between chosen net and traj",rl-k*sp)
+#                print("combine! length=",rl,
+#                      "chosen net=",k,"distance between chosen net and traj",rl-k*sp)
                 pr_2b=nets[k+1].predict(rs_traj_b).flatten()
                 pr_b=(pr_b+pr_2b)/2
 
@@ -172,4 +196,123 @@ def many_net_only_diff(nets,traj_set,min_tr=0,center=25,max_tr=1000,comb=True):
         
     return np.asarray(predictions_comb).flatten()
      
+
                 
+def many_net_only_diff_cont(nets,traj_set,skip=[],min_tr=0,center=25,max_tr=1000):
+    """takes as input list of networks, data set and the vector di 
+    of the dimension of the data the different networks work on """
+    n_nets=len(nets) #number of nets we can use
+    sp=max_tr/n_nets  #length of range that on which each net will be used
+    #print(sp)
+    di=[]
+    for n in nets:
+        di.append(n.layers[0].input_shape[-1])
+    di=np.asarray(di)
+    predictions_comb=[]
+    for traj in traj_set:
+        jj=len(traj)
+        k=int((jj-min_tr)/sp)  #choosing which net to use
+        #print(jj)
+        
+        rl=int((jj-1)/di[k])*di[k]  #cutting the trajectory to fit to  multiple of dimensione used by net
+        d=(rl+1-(k*sp+center))/sp   #distance between traj len (after cutting) and center of net used
+        traj=np.diff(traj)
+        
+        #normalizing trajectory
+        sd=np.std(traj)
+        if sd>0:
+            traj=(traj-np.mean(traj))/sd
+        else:
+            traj=(traj-np.mean(traj))
+            #print('traj len=',jj,'diff')
+        
+            
+            
+       
+         #print(rl)
+        rs_traj = np.asarray(traj[:rl]).reshape(1,int(rl/di[k]),di[k]) # reshaped trajectory to fir network requirement
+
+        #of the network length
+        #print(len(traj),"chosen net",k)
+        pr_b=nets[k].predict(rs_traj).flatten()
+        
+        if ((d>=0) and (k<n_nets-1) and np.isin(k,skip,invert=True) ):
+            
+
+            rl_b=int((jj-1)/di[k+1])*di[k+1] 
+            rs_traj_b = np.asarray(traj[:rl_b]).reshape(1,int(rl_b/di[k+1]),di[k+1])
+#                print("combine! length=",rl,
+#                      "chosen net=",k,"distance between chosen net and traj",rl-k*sp)
+            pr_2b=nets[k+1].predict(rs_traj_b).flatten()
+            pr_b=((1-d)*pr_b+d*pr_2b)
+
+        predictions_comb.append(pr_b)
+        
+    return np.asarray(predictions_comb).flatten()
+     
+
+                
+def many_net_only_diff_cont_varc(nets,traj_set,centers,skip=[],min_tr=0,max_tr=1000):
+    """takes as input list of networks, data set and the vector centers of where the different nets
+    were trained on. NB skip functionality is not worked out"""
+    centers=np.asarray(centers)
+    n_nets=len(nets) #number of nets we can use
+    #sp=max_tr/n_nets  #length of range that on which each net will be used
+    #print(sp)
+    di=[]
+    for n in nets:
+        di.append(n.layers[0].input_shape[-1])
+    di=np.asarray(di)
+    predictions_comb=[]
+    for traj in traj_set:
+        jj=len(traj)
+        #choosing which net to use
+        if jj<centers[0]:
+            k=0
+        elif jj>np.max(centers):
+            k=n_nets-1
+        else:
+            
+            k=np.argmax(jj<np.asarray(centers))-1
+        #k=int((jj-min_tr)/sp)  #choosing which net to use
+        #print(jj)
+        
+        rl=int((jj-1)/di[k])*di[k]  #cutting the trajectory to fit to  multiple of dimensione used by net
+        traj=np.diff(traj)
+        
+        #normalizing trajectory
+        
+        sd=np.std(traj)
+        if sd>0:
+            traj=(traj-np.mean(traj))/sd
+        else:
+            traj=(traj-np.mean(traj))
+            #print('traj len=',jj,'diff')
+        
+            
+            
+       
+         #print(rl)
+        rs_traj = np.asarray(traj[:rl]).reshape(1,int(rl/di[k]),di[k]) # reshaped trajectory to fir network requirement
+
+        #of the network length
+        #print(len(traj),"chosen net",k)
+        pr_b=nets[k].predict(rs_traj).flatten()
+        
+        if ((k<n_nets-1) and np.isin(k,skip,invert=True) ):
+            #distance between the net used and the following one
+            ran=centers[k+1]-centers[k]
+            d=(rl+1-centers[k])/ran   #distance between traj len (after cutting) and center of net used
+            if d>=0:
+            
+
+                rl_b=int((jj-1)/di[k+1])*di[k+1] 
+                rs_traj_b = np.asarray(traj[:rl_b]).reshape(1,int(rl_b/di[k+1]),di[k+1])
+    #                print("combine! length=",rl,
+    #                      "chosen net=",k,"distance between chosen net and traj",rl-k*sp)
+                pr_2b=nets[k+1].predict(rs_traj_b).flatten()
+                pr_b=((1-d)*pr_b+d*pr_2b)
+
+        predictions_comb.append(pr_b)
+        
+    return np.asarray(predictions_comb).flatten()
