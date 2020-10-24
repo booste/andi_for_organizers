@@ -349,7 +349,11 @@ def many_net_odcv_hd(nets,traj_set,centers,dim,thr=1e-12,skip=[],min_tr=0,max_tr
     di=np.asarray(di)
     predictions=[]        #predictions for the various dimensions
     predictions_ave=[]    #predictiona averaged over dimensions
+    tot_tt=len(traj_set)
+    count=0
     for traj in traj_set:
+        count=count+1
+        print('traj',count,'/',tot_tt, end='\r')
         dim=int(dim)
         jj = int(len(traj)/dim)   #length of the trajectory
         #print(jj)
