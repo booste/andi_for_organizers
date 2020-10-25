@@ -331,7 +331,7 @@ def high_d(traj,d,thr=0):
         x = np.diff(traj[kk*i:(kk+1)*i])  # separate x data
 
         sx=np.std(x)
-        xvec[kk] = (x-np.mean(x)) / np.where(sx>thr,sx,1)   # normalize x data
+        xvec[kk,:] = (x-np.mean(x)) / np.where(sx>thr,sx,1)   # normalize x data
     return xvec
 
 
