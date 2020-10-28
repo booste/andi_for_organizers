@@ -1,0 +1,39 @@
+Task 1
+
+1d
+centers =[25,50, 65, 75, 125,225,325,425,525,625, 725, 825, 925]
+
+2d 
+Combination but only with [25, 65, 125,225,325,425,525,625, 725, 825, 925]
+
+3d 
+combination but only with [25, 65, 125,225,325,425,525,625, 725, 825, 925]
+
+
+Task2
+
+1d
+net_centers1d=[25,65,125, 225,425,825]
+task2_predictions1d_more_nets.npy
+
+2d
+net_centers2d=[25,125, 225,425]
+task2_predictions2d_using2d.npy
+And where not lw, combined with 
+net_centers1d=[25,65,125, 225,425,825]
+task2_predictions2d_more_using2traj_1dnets.npy
+task2_predictions2d_using2d_CORRECTED.npy
+Fixed error
+3d
+net_centers1d=[25,65,125, 225,425,825]
+task2_predictions3d_u1d_more_nets.npy
+net_centers2d=[25,125, 225,425]
+task2_predictions3d_u2d_CORRECTED.npy
+Combined 
+
+Task 3
+
+Standard 
+
+
+
