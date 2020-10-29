@@ -431,7 +431,7 @@ def many_net_only_diff_cont_varc_dim(nets,traj_set,centers,dim,skip=[],min_tr=0,
     count=0
     for traj in traj_set:
         count=count+1
-        print('traj',count,'/',tot_tt,'\r')
+        print('traj',count,'/',tot_tt,end='\r')
         jj=len(traj)            #length of trajectory times dimension
         js=int(jj/dim)          #length of trajectory
         #choosing which net to use
@@ -481,7 +481,7 @@ def many_net_only_diff_cont_varc_dim(nets,traj_set,centers,dim,skip=[],min_tr=0,
             #distance between the net used and the following one
             ran=centers[k+1]-centers[k]
             d=(js-centers[k])/ran   #distance between traj len (after cutting) and center of net used
-            print(js,centers[k],ran,d,'\n')
+           # print(js,centers[k],ran,d,'\n')
             if d>=0:
             
 
@@ -573,7 +573,7 @@ def many_net_only_diff_cont_varc_2d_4_3d(nets,traj_set,centers, skip=[],min_tr=0
                 #distance between the net used and the following one
                 ran=centers[k+1]-centers[k]
                 d=(js-centers[k])/ran   #distance between traj len (after cutting) and center of net used
-                print(js,centers[k],ran,d,'\n')
+               # print(js,centers[k],ran,d,'\n')
 
                 if d>=0:
 
