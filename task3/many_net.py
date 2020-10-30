@@ -416,7 +416,8 @@ def many_net_odcv_hd(nets,traj_set,centers,dim,thr=1e-12,skip=[],min_tr=0,max_tr
 
     
 def many_net_only_diff_cont_varc_dim(nets,traj_set,centers,dim,skip=[],min_tr=0,max_tr=1000):
-    """takes as input list of networks, data set and the vector centers of where the different nets
+    """Fot networks trained on higher dimensions! Takes as input list of networks, data set and
+    the vector centers of where the different nets
     were trained on. Also needs dimension of trajectory NB skip functionality is not worked out"""
     centers=np.asarray(centers)
     n_nets=len(nets) #number of nets we can use
@@ -482,7 +483,7 @@ def many_net_only_diff_cont_varc_dim(nets,traj_set,centers,dim,skip=[],min_tr=0,
             ran=centers[k+1]-centers[k]
             d=(js-centers[k])/ran   #distance between traj len (after cutting) and center of net used
            # print(js,centers[k],ran,d,'\n')
-            if d>=0:
+            if d>0:
             
 
                 rl_b=int((jj-dim)/di[k+1])*di[k+1] 
