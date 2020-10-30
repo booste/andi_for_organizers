@@ -483,7 +483,7 @@ def many_net_only_diff_cont_varc_dim(nets,traj_set,centers,dim,skip=[],min_tr=0,
             ran=centers[k+1]-centers[k]
             d=(js-centers[k])/ran   #distance between traj len (after cutting) and center of net used
            # print(js,centers[k],ran,d,'\n')
-            if d>=0:
+            if d>0:
             
 
                 rl_b=int((jj-dim)/di[k+1])*di[k+1] 

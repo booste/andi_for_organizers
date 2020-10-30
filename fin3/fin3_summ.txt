@@ -4,11 +4,16 @@ Task 1
 centers =[25, 50, 65, 75, 125, ,165, 225,325,425,525,625, 725, 825, 925]
 
 2d 
-Combination but only with [25, 65, 125,225,325,425,525,625, 725, 825, 925]
+Combination between 2d trained on  [25, 125, 225, 525]
+
+And 
+
+For 1d only with [25, 65, 125,225,325,425,525,625, 725, 825, 925]
+
+Using 1d for all except the LW cases
 
 3d 
-combination but only with [25, 65, 125,225,325,425,525,625, 725, 825, 925]
-
+Using 2d nets trained on [25, 125, 225, 525] on 3d data
 
 Task2
 
