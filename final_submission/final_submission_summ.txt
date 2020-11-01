@@ -59,4 +59,9 @@ Task 3
 For 1d inference of switching time it is using an additional net, expected RMSE 35.5
 New classification models.
 
-2d???
+2d inference using 2d network
+Classification: averaging 1d nets on dimensions independently
+
+3d inference using averages of 2d network
+Classification: averaging 1d netsnets on dimensions independently
+
