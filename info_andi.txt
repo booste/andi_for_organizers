@@ -1,0 +1,30 @@
+- Team Name:
+
+EduN
+ 
+- List of team members:
+
+Stefano Bo, Aykut Argun
+
+- Affiliations:
+
+SB: Max Planck Institute for the Physics of Complex Systems (MPI-PKS)
+AA: University of Gothenburg
+ 
+- Email of the Team leader:
+
+stefabo@pks.mpg.de
+ 
+- Name of the method: 
+
+mAD-RNN// mRNN4AD // mRNNAD
+ 
+- Brief description of the method:
+
+For all the tasks we have employed artificial neural networks based on recurrent neural networks. The first two layers are roughly the same for all the tasks (we reshape the input in different ways depending on the trajectory length) and the final layers are different for each task. Since the performance of the networks depended strongly on the length of the trajectories we have trained several networks for different trajectory lengths. To analyze the trajectories of a given length we use a combination of the networks trained on similar lengths.
+ 
+- A link to a repository or a private web where the code or the trained model can be downloaded. Alternatively, you can also send the code as an attachment or a link for its download to andi.challenge@gmail.com. The code provided must enable the organizers to check the results of the best submission.
+
+- Please also include detailed instructions to run the code on a dataset with the same structure as the datasets provided for the Andi Challenge.
+
+In the linked repository you will find 5 Ipython notebooks with the detailed instructions on how to evaluate data and to format it for the submission. In the repository there are also some Python functions which are used by the notebooks.
