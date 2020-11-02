@@ -27,4 +27,4 @@ For all the tasks we have employed artificial neural networks based on recurrent
 
 - Please also include detailed instructions to run the code on a dataset with the same structure as the datasets provided for the Andi Challenge.
 
-In the linked repository you will find 5 Ipython notebooks with the detailed instructions on how to evaluate data and to format it for the submission. In the repository there are also some Python functions which are used by the notebooks.
+In the linked repository you will find 5 Ipython notebooks with the detailed instructions on how to evaluate data and to format it for the submission. In the repository there are also some Python functions which are used by the notebooks. NB it takes several hours to run these notebooks, especially the ones for task 1 and 2 in higher dimensions. Task 3 is faster.
