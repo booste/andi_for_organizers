@@ -14,7 +14,7 @@ import numpy as np
      
 
                 
-def many_net_only_diff_cont_varc(nets,traj_set,centers,skip=[],min_tr=0,max_tr=1000):
+def many_net_1d(nets,traj_set,centers,skip=[],min_tr=0,max_tr=1000):
     """takes as input list of networks, data set and the vector centers of where the different nets
     were trained on. 
     Returns an array of predictions.
@@ -100,24 +100,10 @@ def many_net_only_diff_cont_varc(nets,traj_set,centers,skip=[],min_tr=0,max_tr=1
 
 
 
-#function to split multi-dimensional trajectories into array with row for each dimension
-def high_d(traj,d,thr=0):
-    d=int(d)
-    i = int(len(traj)/d)
-    xvec = np.ones((d,i-1))
-    traj=np.asarray(traj)
-    for kk in range(d):
-       # print(len(traj),i)
-        
-        x = np.diff(traj[kk*i:(kk+1)*i])  # separate x data
-
-        sx=np.std(x)
-        xvec[kk,:] = (x-np.mean(x)) / np.where(sx>thr,sx,1)   # normalize x data
-    return xvec
 
 
 
-def many_net_odcv_hd(nets,traj_set,centers,dim,thr=1e-12,skip=[],min_tr=0,max_tr=1000):
+def many_net_hd_u1d(nets,traj_set,centers,dim,thr=1e-12,skip=[],min_tr=0,max_tr=1000):
     """For multidimensional trajectories: it splits the data into one dimensional trajectories
     along each dimensions. It returns two arrays, the first one is the prediction made on 
     all different spatial dimension; the second array is the average
@@ -213,7 +199,7 @@ def many_net_odcv_hd(nets,traj_set,centers,dim,thr=1e-12,skip=[],min_tr=0,max_tr
 
 
     
-def many_net_only_diff_cont_varc_dim(nets,traj_set,centers,dim,skip=[],min_tr=0,max_tr=1000):
+def many_net_uhd(nets,traj_set,centers,dim,skip=[],min_tr=0,max_tr=1000):
     """Fot networks trained on higher dimensions! Takes as input list of networks, data set and
     the vector centers of where the different nets
     were trained on. Also needs dimension of trajectory.
