@@ -17,7 +17,7 @@ stefabo@pks.mpg.de
  
 - Name of the method: 
 
-mAD-RNN// mRNN4AD // mRNNAD
+MAD-RNN
  
 - Brief description of the method:
 
