@@ -1,7 +1,11 @@
-Notebooks to perform inference on anomalous diffusion trajectories in the format of the ones produced by the AnDi Challenge datasets.
+Notebooks to perform inference on anomalous diffusion trajectories in the format of the ones produced by the AnDi Challenge datasets, https://competitions.codalab.org/competitions/23601  doi: 10.5281/zenodo.3707702.
+
 The trajectories have to be generated or downloaded.
-The folds nets contains the neural networks to be used.
+
+The folder nets contains the neural networks to be used.
+
 The folder predictions contains the predictions made on the challenge data using the notebooks and the nets.
+
 The folder best_sub contains the predictions submitted in the challenge phase that performed the best.
 
 The notebook task1_submission.ipynb performs the predictions for task 1.
