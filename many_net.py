@@ -304,7 +304,7 @@ def many_net_only_diff_cont_varc_dim(nets,traj_set,centers,dim,skip=[],min_tr=0,
 
 def many_net_only_diff_cont_varc_2d_4_3d(nets,traj_set,centers, skip=[],min_tr=0,max_tr=1000):
     """takes as input list of networks, data set and the vector centers of where the different nets
-    were trained on. Also needs dimension of trajectory. Meant for 3d trajectories to be analyzed
+    were trained on.  Meant for 3d trajectories to be analyzed
     as averages of 2d trajectories. NB skip functionality is not worked out"""
     centers=np.asarray(centers)
     n_nets=len(nets) #number of nets we can use
